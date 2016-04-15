@@ -17,12 +17,8 @@ function download (config, dirs, tools, callback) {
       value: 'application/sparql-results+json'
     }]
   })
-  .on('error', (err) => {
-    callback(err)
-  })
-  .on('end', () => {
-    callback()
-  })
+  .on('error', callback)
+  .on('end', callback)
   .pipe(fs.createWriteStream(path.join(dirs.current, 'results.json')))
 }
 
