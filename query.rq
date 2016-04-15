@@ -9,7 +9,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT
   ?item ?name
   ?types ?type_strings
-  ?point
+  ?lat ?lon
 WHERE {
   ?item wdt:P31 ?type .
   ?type wdt:P279* wd:Q41176 .
@@ -20,11 +20,16 @@ WHERE {
       ?name
       (concat('["',group_concat(?type;separator='","'),'"]') AS ?types)
       (concat('["',group_concat(?type_string;separator='","'),'"]') AS ?type_strings)
-      ?point
+      ?lat ?lon
     WHERE {
       ?item wdt:P131* wd:Q60 .
-      ?item wdt:P625 ?point .
       ?item wdt:P31 ?type .
+
+      ?item wdt:P625 ?coord .
+      ?item p:P625 ?coordinate .
+      ?coordinate psv:P625 ?coordinate_node .
+      ?coordinate_node wikibase:geoLatitude ?lat .
+      ?coordinate_node wikibase:geoLongitude ?lon .
 
       SERVICE wikibase:label {
         bd:serviceParam wikibase:language "en" .
@@ -32,7 +37,7 @@ WHERE {
         ?type rdfs:label ?type_string
       }
     }
-    GROUP BY ?item ?name ?point
+    GROUP BY ?item ?name ?lon ?lat
     ORDER BY ?item
   }
 }

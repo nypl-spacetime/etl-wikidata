@@ -3,7 +3,6 @@ var path = require('path')
 var H = require('highland')
 var JSONStream = require('JSONStream')
 var request = require('request')
-var parse = require('wellknown')
 
 // var sparqlEndpoint = 'https://query.wikidata.org/sparql'
 var sparqlEndpoint = 'https://query.wikidata.org/bigdata/namespace/wdq/sparql'
@@ -42,7 +41,13 @@ function transform (config, dirs, tools, callback) {
           data: {
             types: JSON.parse(row.type_strings.value)
           },
-          geometry: parse(row.point.value)
+          geometry: {
+            type: 'Point',
+            coordinates: [
+              row.lon.value,
+              row.lat.value
+            ].map(parseFloat)
+          }
         }
       }
     })
