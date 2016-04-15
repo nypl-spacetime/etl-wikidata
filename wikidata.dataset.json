@@ -1,0 +1,15 @@
+{
+  "id": "wikidata",
+  "title": "Wikidata",
+  "license": "ODC-By 1.0",
+  "description": "Wikidata",
+  "author": "Wikidata",
+  "website": "https://www.wikidata.org/wiki/Wikidata:Main_Page",
+  "editor": "Space/Time Directory",
+  "@context": {
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "type": {
+      "@type": "xsd:string"
+    }
+  }
+}
